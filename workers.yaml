@@ -1,0 +1,10 @@
+---
+- name: for locust workers
+  hosts: workers
+  remote_user: root
+
+  tasks:
+
+  - name: run locust as workers
+    shell: "cd /root; nohup locust --worker --master-host=117.1.29.7 &"
+

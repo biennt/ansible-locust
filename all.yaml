@@ -1,0 +1,13 @@
+---
+- name: for all clients
+  hosts: all
+  remote_user: root
+
+  tasks:
+ 
+  - name: Copy locustfile.py
+    ansible.builtin.copy:
+      src: locustfile.py
+      dest: /root/locustfile.py
+
+

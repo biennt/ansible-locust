@@ -1,0 +1,11 @@
+---
+- name: for locust master
+  hosts: master
+  remote_user: root
+
+  tasks:
+
+  - name: run locust in background
+    shell: "cd /root; nohup locust --master &"
+
+

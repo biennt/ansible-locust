@@ -1,0 +1,56 @@
+---
+- name: run shell
+  hosts: all
+  remote_user: root
+
+  tasks:
+ 
+  - name: install pip3
+    ansible.builtin.apt:
+      name: python3-pip
+      state: present
+
+ 
+  - name: install locust
+    ansible.builtin.pip:
+      name: locust==2.15.1
+
+  - name: change net.ipv4.ip_local_port_range
+    ansible.posix.sysctl:
+      name: net.ipv4.ip_local_port_range
+      value: '10000 65535'
+      state: present
+      sysctl_set: true
+      reload: true
+
+  - name: hard nofile for *
+    community.general.pam_limits:
+      domain: '*'
+      limit_type: hard
+      limit_item: nofile
+      value: 1000001
+
+  - name: soft nofile for *
+    community.general.pam_limits:
+      domain: '*'
+      limit_type: soft
+      limit_item: nofile
+      value: 1000001
+
+  - name: hard nofile for root
+    community.general.pam_limits:
+      domain: 'root'
+      limit_type: hard
+      limit_item: nofile
+      value: 1000001
+
+  - name: soft nofile for root
+    community.general.pam_limits:
+      domain: 'root'
+      limit_type: soft
+      limit_item: nofile
+      value: 1000001
+
+#  - name: Unconditionally reboot the machine with all defaults
+#    ansible.builtin.reboot:
+

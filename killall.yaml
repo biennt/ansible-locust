@@ -1,0 +1,10 @@
+---
+- name: for all clients
+  hosts: all
+  remote_user: root
+
+  tasks:
+ 
+  - name: kill all locust process
+    shell: "pkill locust"
+
